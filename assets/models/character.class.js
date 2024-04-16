@@ -70,6 +70,9 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.LEFT && this.x > 100) {
                 this.moveLeft();
+                if (this.x - this.world.camera_x <= 200 && !isRightKeyPressed) {
+                    this.world.camera_x = Math.max(this.x - 200, 0);
+                }
             }
 
             /*Jumping with gravity
@@ -94,7 +97,7 @@ class Character extends MovableObject {
         setInterval(() => {
 
             /* Jumping with gravity
-            
+
             if(this.isAboveGround()) {
                 let i = this.currentImage % this.IMAGES_IDLE.length;
                 let path = this.IMAGES_IDLE[i];
@@ -107,6 +110,11 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.DOWN || this.world.keyboard.LEFT) {
                 let i = this.currentImage % this.IMAGES_SWIM.length;
                 let path = this.IMAGES_SWIM[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }else {
+                let i = this.currentImage % this.IMAGES_IDLE.length;
+                let path = this.IMAGES_IDLE[i];
                 this.img = this.imageCache[path];
                 this.currentImage++;
             }

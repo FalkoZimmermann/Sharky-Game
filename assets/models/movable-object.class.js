@@ -34,7 +34,9 @@ class MovableObject {
 
         /* Zeigt nur ein Kollissionsrahmen um ein bestimmtes Object */
 
-        if(this instanceof Character || this instanceof Jellyfish || this instanceof Jellyfish_Yellow || this instanceof Pufferfish || this instanceof Endboss || this instanceof Pufferfish_Red) {
+        if(this instanceof Character || this instanceof Jellyfish || this instanceof Jellyfish_Yellow ||
+             this instanceof Pufferfish || this instanceof Endboss || this instanceof Pufferfish_Red || 
+             this instanceof Barriere1 || this instanceof Barriere2 || this instanceof Barriere3 || this instanceof Coin) {
         ctx.beginPath();
         ctx.lineWidth = "4";
         ctx.strokeStyle = "green";
@@ -78,26 +80,29 @@ class MovableObject {
     }
 
     moveLeft() {
+        
         this.x -= 5;
         this.otherDirection = true;
         this.swim_sounds.play();
 
                 // Überprüfen, ob der Charakter sich am linken Rand des Canvas befindet
-        if (this.x - this.world.camera_x <= 200 && !isRightKeyPressed) {
-            this.world.camera_x = Math.max(this.x - 200, 0);
-        }
+        
     }
 
     jump(){
         this.speedY = 40; 
     }
 
-    isColliding(mo) {
-        return this.x + this.width > mo.x &&
-        this.y + this.height > mo.y &&
-        this.x < mo.x &&
-        this.y < mo.y + mo.height
-    }
+
+    isColliding (obj) {
+        return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
+                (this.Y + this.offsetY + this.height) >= obj.Y &&
+                (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
+                obj.onCollisionCourse; 
+                
+        // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
+}
 
     
 }
