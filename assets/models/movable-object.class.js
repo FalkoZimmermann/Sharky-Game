@@ -8,6 +8,9 @@ class MovableObject {
     speedY = 0;
     acceleration = 3;
 
+    /* Jumping with gravity 
+
+
     applyGravity() {
         setInterval(() => {
             if(this.isAboveGround() || this.speedY > 0 ) {
@@ -21,15 +24,23 @@ class MovableObject {
         return this.y < 500; 
     }
 
+    */
+
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+
     drawframe(ctx) {
+
+        /* Zeigt nur ein Kollissionsrahmen um ein bestimmtes Object */
+
+        if(this instanceof Character || this instanceof Jellyfish || this instanceof Jellyfish_Yellow || this instanceof Pufferfish || this instanceof Endboss || this instanceof Pufferfish_Red) {
         ctx.beginPath();
         ctx.lineWidth = "4";
         ctx.strokeStyle = "green";
         ctx.rect( this.x, this.y, this.width, this.height);
         ctx.stroke();
+        }
     }
 
     loadImage(path) {
@@ -57,9 +68,11 @@ class MovableObject {
     }
 
     moveDown() {
+
+        /* Jumping with gravity
         setInterval(() => {
             this.x -= this.speed;
-        }, 1000 / 60);
+        }, 1000 / 60); */
         this.y += 5;
         this.swim_sounds.play();
     }
@@ -77,6 +90,13 @@ class MovableObject {
 
     jump(){
         this.speedY = 40; 
+    }
+
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+        this.y + this.height > mo.y &&
+        this.x < mo.x &&
+        this.y < mo.y + mo.height
     }
 
     

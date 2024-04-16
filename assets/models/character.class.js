@@ -41,7 +41,11 @@ class Character extends MovableObject {
         super().loadImage('assets/img/Alternative Grafiken - Sharkie/1.Sharkie/3.Swim/1.png',);
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
-        this.applyGravity();
+       /* Jumping with gravity
+       
+       this.applyGravity(); */
+
+
         this.animate();
     }
 
@@ -68,11 +72,13 @@ class Character extends MovableObject {
                 this.moveLeft();
             }
 
-            /*jumping*/
+            /*Jumping with gravity
 
             if(this.world.keyboard.SPACE && !this.isAboveGround() ) { 
                 this.jump();
             }
+                */
+
 
             if ((this.x - this.world.camera_x) <= 100) {
                 this.world.camera_x = Math.max(this.x - 100, 0);
@@ -84,15 +90,19 @@ class Character extends MovableObject {
 
         }, 1000 / 60);
 
-
+    
         setInterval(() => {
 
+            /* Jumping with gravity
+            
             if(this.isAboveGround()) {
                 let i = this.currentImage % this.IMAGES_IDLE.length;
                 let path = this.IMAGES_IDLE[i];
                 this.img = this.imageCache[path];
                 this.currentImage++;
              } else {
+                */
+
 
             if (this.world.keyboard.RIGHT || this.world.keyboard.UP || this.world.keyboard.DOWN || this.world.keyboard.LEFT) {
                 let i = this.currentImage % this.IMAGES_SWIM.length;
@@ -101,8 +111,8 @@ class Character extends MovableObject {
                 this.currentImage++;
             }
         }
-        }, 150);
+        , 150);
 
-    }
+    } 
 
 }
