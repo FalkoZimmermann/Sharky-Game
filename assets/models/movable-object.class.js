@@ -7,6 +7,8 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 3;
+    lastHit = 0;
+
 
     /* Jumping with gravity 
 
@@ -57,6 +59,13 @@ class MovableObject {
         this.imageCache[path] = img;
     });
     }
+
+    /* playAnimation(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imagesCache[path];
+        this.currentImage++;
+    } */
     
     moveRight() {
         this.x += 5;
@@ -93,7 +102,35 @@ class MovableObject {
         this.speedY = 40; 
     }
 
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height;
+    }
 
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit; //difference in ms
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
+        
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    /*
     isColliding (obj) {
         return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
                 (this.Y + this.offsetY + this.height) >= obj.Y &&
@@ -102,7 +139,7 @@ class MovableObject {
                 
         // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
-}
+} */
 
     
 }
